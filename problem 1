@@ -87,11 +87,7 @@ circuit.cx(q[2],q[4])
 circuit.cx(q[3],q[4])
 circuit.measure(q[4],c[4])
 circuit.draw(output = 'mpl')
-simulator = Aer.get_backend('qasm_simulator')
-job = execute(circuit, simulator)
-result = job.result()
-counts = result.get_counts()
-plot_histogram(counts)
+
 from qiskit import IBMQ
 from qiskit.providers.ibmq import least_busy
 
