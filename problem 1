@@ -68,3 +68,47 @@ result = job.result()
 counts = result.get_counts()
 plot_histogram(counts)
 #(b)
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(5)
+c = ClassicalRegister(5)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.h(q[4])
+circuit.cx(q[0],q[4])
+circuit.cx(q[1],q[4])
+circuit.cx(q[2],q[4])
+circuit.cx(q[3],q[4])
+circuit.measure(q[4],c[4])
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+from qiskit import IBMQ
+from qiskit.providers.ibmq import least_busy
+
+apitoken = '8eefe7c0506a2676bcd82d6e31f408710558bf9b1c16a95108376b7c0007c4d8eca2a97a01f96d1878a11783bf0c4278571b8ddfdd8df0570f2f93c46845b45c'
+IBMQ.save_account(apitoken)
+IBMQ.load_account()
+provider = IBMQ.get_provider(hub = 'ibm-q', group = 'open', project = 'main')
+
+backend = least_busy(provider.backends(filters=lambda x:
+x.configuration().n_qubits >= 5
+and not x.configuration().simulator
+and x.status().operational==True))
+print("least busy backend: ", backend)
+
+job = execute(circuit, backend = backend , shot = 256)
+from qiskit.tools.monitor import job_monitor
+job_monitor(job)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
