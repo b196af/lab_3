@@ -1,0 +1,179 @@
+#(1)
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi,q[0])
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+#(2)
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi/2,q[0])
+circuit.ry(pi,q[1])
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+#(3)
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi/4,q[0])
+circuit.rz(pi/2,q[1])
+circuit.rz(pi,q[2])
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+#(1) apply qft_dagger
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi,q[0])
+#circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+def qft_dagger(qc):
+#"""n-qubit QFTdagger the first n qubits in circuit"""
+    n = 4
+    # Don't forget the Swaps!
+    for qubit in range(n//2):
+        qc.swap(qubit, n-qubit-1)
+    for j in range(n):
+        for m in range(j):
+            qc.cu1(-np.pi/float(2**(j-m)), m, j)
+            qc.h(j)
+    qc.name = "QFT"
+    return qc
+circuit = qft_dagger(circuit)
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+
+#(2) apply qft_dagger
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi/2,q[0])
+circuit.ry(pi,q[1])
+#circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+def qft_dagger(qc):
+#"""n-qubit QFTdagger the first n qubits in circuit"""
+    n = 4
+    # Don't forget the Swaps!
+    for qubit in range(n//2):
+        qc.swap(qubit, n-qubit-1)
+    for j in range(n):
+        for m in range(j):
+            qc.cu1(-np.pi/float(2**(j-m)), m, j)
+            qc.h(j)
+    qc.name = "QFT"
+    return qc
+circuit = qft_dagger(circuit)
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
+
+#(3) apply qft_dagger
+import qiskit
+import numpy
+import numpy as np
+from qiskit import *
+from qiskit.visualization import plot_histogram, plot_bloch_vector , plot_bloch_multivector
+from math import sqrt, pi
+from qiskit import QuantumCircuit, execute, Aer, assemble
+from numpy.random import randint
+q = QuantumRegister(4)
+c = ClassicalRegister(4)
+circuit = QuantumCircuit(q,c)
+circuit.h(q)
+circuit.rz(pi/4,q[0])
+circuit.rz(pi/2,q[1])
+circuit.rz(pi,q[2])
+#circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+def qft_dagger(qc):
+#"""n-qubit QFTdagger the first n qubits in circuit"""
+    n = 4
+    # Don't forget the Swaps!
+    for qubit in range(n//2):
+        qc.swap(qubit, n-qubit-1)
+    for j in range(n):
+        for m in range(j):
+            qc.cu1(-np.pi/float(2**(j-m)), m, j)
+            qc.h(j)
+    qc.name = "QFT"
+    return qc
+circuit = qft_dagger(circuit)
+circuit.measure(q,c)
+circuit.draw(output = 'mpl')
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(circuit, simulator)
+result = job.result()
+counts = result.get_counts()
+plot_histogram(counts)
