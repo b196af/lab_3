@@ -105,6 +105,7 @@ from numpy.random import randint
 n = 4
 q = QuantumRegister(n)
 c = ClassicalRegister(n)
+circuit = QuantumCircuit(q,c)
 circuit.initialize((1/6,1/sqrt(18),1/sqrt(12),1/sqrt(9),1/sqrt(36/5),1/sqrt(6),1/sqrt(36/7),1/sqrt(36/8),0,0,0,0,0,0,0,0))
 circuit.h(q[2])
 circuit.cx(q[0],q[2])
