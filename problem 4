@@ -100,7 +100,7 @@ def c_amod15(a, power):
     U.name = "%i^%i mod 15" % (a, power)
     c_U = U.control()
     return c_U
-    for q in range(n_count):
+for q in range(n_count):
     qc.h(q)
 # And ancilla register in state |1>
 qc.x(3+n_count)
